@@ -35,6 +35,9 @@ hypotheses and operates with the assumption that the IDs in the
 UNITE+INSD release (which have apparently already undergone some QAQC by
 UNITE) are reliable.
 
+The updated fungal taxonomy reference is found in the file
+`if-unite-insdc.fa.gz`, located in the `02-rename` folder.
+
 This whole repo will (hopefully) become obsolete if:
 
 - future releases include species hypotheses of taxa currently only

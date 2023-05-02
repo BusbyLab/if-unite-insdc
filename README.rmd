@@ -23,6 +23,8 @@ Starting from the most recent (as of `r Sys.Date()`) fungal UNITE+INSD release, 
 
 Because UNITE does not include the authority in the applied taxonomy, this approach ends up shedding more sequences as a conservative measure, only including sequences with unambiguous taxonomy. Also, because data dumps of Index Fungorum taxonomy (which are difficult to find anyways!) appear to only allow indexing at the genus-level, a genus-level ID requirement is placed on the UNITE+INSD release. This approach also doesn't apply the dynamic clustering that UNITE applies for it's species hypotheses and operates with the assumption that the IDs in the UNITE+INSD release (which have apparently already undergone some QAQC by UNITE) are reliable.
 
+The updated fungal taxonomy reference is found in the file `if-unite-insdc.fa.gz`, located in the `02-rename` folder.
+
 This whole repo will (hopefully) become obsolete if:
 
 - future releases include species hypotheses of taxa currently only found in UNITE+INSD releases
