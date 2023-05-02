@@ -1,0 +1,10 @@
+vsearch v2.22.1_linux_x86_64, 15.3GB RAM, 12 cores
+vsearch --fasta_width 0 --derep_id 02-rename/if-unite-insdc.fa --log 02-rename/logs/derep.txt --output -
+Started  Tue May  2 12:18:50 2023
+2350683964 nt in 4281424 seqs, min 262, max 6233, avg 549
+44025 unique sequences, avg cluster 97.2, median 3, max 286556
+
+
+Finished Tue May  2 12:19:00 2023
+Elapsed time 00:10
+Max memory 45.8MB

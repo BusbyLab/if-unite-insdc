@@ -1,0 +1,16 @@
+name: /home/gerverska/projects/if-unite-insdc/env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - bioconductor-biostrings
+  - r-base=4.2.2
+  - r-dplyr
+  - r-markdown
+  - r-readr
+  - r-rmarkdown
+  - r-stringr
+  - r-tidyr
+  - vsearch
+prefix: /home/gerverska/projects/if-unite-insdc/env
