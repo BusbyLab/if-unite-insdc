@@ -1,4 +1,4 @@
 env
 01-prep/*.fa.gz
-data/*.fasta.gz
+data
 *-log
