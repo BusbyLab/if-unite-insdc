@@ -1,26 +1,5 @@
 # Fix the fungal taxonomy in the UNITE + INSDC release ####
 
-# # Accept an argument for the number of threads and check it for validity ####
-# threads <- commandArgs(T) |> as.integer()
-# 
-# if(is.na(threads) == T){
-#     stop('Argument was converted to NA')
-# }
-# if(length(threads) < 1){
-#     stop('Please specify the number of threads to launch')
-# }
-# if(length(threads) > 1){
-#     stop('Too many arguments have been provided')
-# }
-# if(is.numeric(threads) == F){
-#     stop('Only numeric arguments are accepted')
-# }
-# if(threads < 1){
-#     stop('At least one thread is needed')
-# } else {
-#     cat(threads, 'threads requested', '\n')
-# }
-
 # Load packages ####
 library(Biostrings)
 library(tidyr)
@@ -51,20 +30,18 @@ fun$taxon <- fun$species |>
 
 # Read in and process the Index Fungorum reference ####
 fg <- read_csv(file.path('data', 'IFexportGN-2023-03-07.csv'), skip = 1,
-               col_names = c('record', 'taxon', 'author', 'year', 'current', ranks[1:5])) |> 
-    mutate(parts = str_count(taxon, "[[:graph:]]+")) |> 
-    filter(parts <= 2,
-           is.na(current) == F,
+               col_names = c('record', 'taxon', 'author', 'year', 'current', ranks[1:5])) |>
+    filter(is.na(current) == F,
            is.na(kingdom) == F) |> 
-    mutate(genus = taxon |> str_extract("^[[:graph:]]+"),
-           species = if_else(taxon |> str_count("[[:graph:]]+") == 2,
-                             taxon |> str_replace(' ', '_'), paste0(taxon, '_sp'))
-           ) |> select(-parts)
-
+    mutate(parts = str_count(taxon, "[[:graph:]]+"),
+           genus = taxon |> str_extract("^[[:graph:]]+"),
+           species = if_else(parts >= 2,
+                             taxon |> str_replace_all(' ', '_'), paste0(taxon, '_sp'))
+           )
 fg$record <- fg$record |> as.character()
 fg$current <- fg$current |> as.character()
 
-# Join the unique fungal taxa with the reference ####
+# Join the unique fungal taxa with the Index Fungorum reference ####
 join <- inner_join(fun, fg, by = 'taxon') |>
     select(ends_with('.x'), record = current)
 
