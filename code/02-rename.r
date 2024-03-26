@@ -4,19 +4,16 @@
 threads <- commandArgs(T) |> as.integer()
 
 if(is.na(threads) == T){
-    stop('Argument was converted to NA')
+    stop('Error: Only integer arguments accepted for first argument')
 }
 if(length(threads) < 1){
-    stop('Please specify the number of threads to launch')
+    stop('Error: Please specify the number of threads to launch')
 }
 if(length(threads) > 1){
-    stop('Too many arguments have been provided')
-}
-if(is.numeric(threads) == F){
-    stop('Only numeric arguments are accepted')
+    stop('Error: Too many arguments have been provided')
 }
 if(threads < 1){
-    stop('At least one thread is needed')
+    stop('Error: At least one thread is needed')
 } else {
     cat(threads, 'threads requested', '\n')
 }
