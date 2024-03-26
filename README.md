@@ -86,9 +86,9 @@ somewhere in the ITS2 region of the full ITS reference).
 
 **These split references are found in the `its1`, `5.8s`, and `its2`
 subdirectories within the `04-extract` directory. Use files following
-the `fun.[ITS1/5.8S/ITS2].fasta.gz` pattern as taxonomic references; the
-other files in each subdirectory are others outputs of
-[`ITSx`](https://microbiology.se/software/itsx/) available for
+the `fun.[ITS1/5.8S/ITS2].fasta.gz` or `euk.5.8S.fasta.gz` pattern as
+taxonomic references; the other files in each subdirectory are outputs
+of [`ITSx`](https://microbiology.se/software/itsx/), available for
 inspection.**
 
 5.8S sequences prefixed with `euk` originate from the most current,

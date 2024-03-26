@@ -44,7 +44,7 @@ Here, `32` corresponds to the number threads requested for parallel processing, 
 ## ITS1, 5.8S, and ITS2-specific datasets
 As of 2023-03-25, each subregion (ITS1, 5.8S, and ITS2) in `if-unite-insdc.fa.gz` also exists in a separate file. This functionality was added to help remove taxonomy assignment noise associated with the `assignTaxonomy()` function in DADA2, which implements the RDP Naive Bayesian Classifier algorithm described in [Wang *et al*. 2007.](https://doi.org/10.1128/aem.00062-07) Essentially, if separate databases are used (ITS1 for ITS1, ITS2 for ITS2, etc.), this removes the chances for non-target *k*mer matches to occur (e.g., where an 8mer in an ITS1 ASV/OTU sequence just happens to match somewhere in the ITS2 region of the full ITS reference).
 
-**These split references are found in the `its1`, `5.8s`, and `its2` subdirectories within the `04-extract` directory. Use files following the `fun.[ITS1/5.8S/ITS2].fasta.gz` pattern as taxonomic references; the other files in each subdirectory are others outputs of [`ITSx`](https://microbiology.se/software/itsx/) available for inspection.**
+**These split references are found in the `its1`, `5.8s`, and `its2` subdirectories within the `04-extract` directory. Use files following the `fun.[ITS1/5.8S/ITS2].fasta.gz` or `euk.5.8S.fasta.gz` pattern as taxonomic references; the other files in each subdirectory are outputs of [`ITSx`](https://microbiology.se/software/itsx/), available for inspection.**
 
 5.8S sequences prefixed with `euk` originate from the most current, non-singleton eukaryote general UNITE release, facilitating non-fungal ASV/OTU filtering prior to taxonomy assignment using one of the `fun` ITS2 references (which originate from a processed UNITE+INSD fungal release).
 
