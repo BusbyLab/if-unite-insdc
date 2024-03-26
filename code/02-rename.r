@@ -40,7 +40,7 @@ dir.create('scratch', recursive = T)
 ranks <- c('kingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species')
 
 # Read in the FASTA file
-full <- readDNAStringSet(file.path(in.path, 'fun.fa.gz'), )
+full <- readDNAStringSet(file.path(in.path, 'fun.fa.gz'))
 
 # Read in the unique fungal taxa ####
 fun <- full |> names() |>
