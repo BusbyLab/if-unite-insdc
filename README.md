@@ -1,7 +1,7 @@
 IF + UNITE + INSDC: improved fungal taxonomy for ITS reference sequences
 ================
 Kyle A. Gervers
-2024-03-25
+2024-03-26
 
 ## Overview
 
@@ -14,7 +14,7 @@ compared with what [Index Fungorum](http://www.indexfungorum.org/)
 reports, and many of the included sequences lack detailed taxonomic
 resolution.
 
-Starting from the most recent (as of 2024-03-25) fungal UNITE+INSD
+Starting from the most recent (as of 2024-03-26) fungal UNITE+INSD
 release, this repo does the following:
 
 - Removes sequences not identified to genus
@@ -69,12 +69,12 @@ Here, `32` corresponds to the number threads requested for parallel
 processing, while `Pseudotsuga` is the host request. Only genus
 arguments are currently accepted, but other ranks will work soon. The
 main purpose of this script is to generate taxonomic references for use
-as priors with the [DADA2 R package](https://github.com/benjjneb/dada2).
+as priors with the [DADA2 R package](http://benjjneb.github.io/dada2/).
 
 ## ITS1, 5.8S, and ITS2-specific datasets
 
-As of 2023-03-25, each subregion (ITS1, 5.8S, and ITS2) in
-`if-unite-insdc.fa.gz` also exists in a separate file. This
+As of 2023-03-25, each subregion (ITS1, 5.8S, and ITS2) of the full-ITS
+sequences in `if-unite-insdc.fa.gz` also exists in a separate file. This
 functionality was added to help remove taxonomy assignment noise
 associated with the `assignTaxonomy()` function in DADA2, which
 implements the RDP Naive Bayesian Classifier algorithm described in
@@ -82,7 +82,7 @@ implements the RDP Naive Bayesian Classifier algorithm described in
 if separate databases are used (ITS1 for ITS1, ITS2 for ITS2, etc.),
 this removes the chances for non-target *k*mer matches to occur (e.g.,
 where an 8mer in an ITS1 ASV/OTU sequence just happens to match
-somewhere in the ITS2 region of the full ITS reference).
+somewhere other than the ITS1 subregion full ITS reference).
 
 **These split references are found in the `its1`, `5.8s`, and `its2`
 subdirectories within the `04-extract` directory. Use files following
