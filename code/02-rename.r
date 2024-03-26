@@ -1,5 +1,26 @@
 # Fix the fungal taxonomy in the UNITE + INSDC release ####
 
+# Accept an argument for the number of threads and check it for validity ####
+threads <- commandArgs(T) |> as.integer()
+
+if(is.na(threads) == T){
+    stop('Argument was converted to NA')
+}
+if(length(threads) < 1){
+    stop('Please specify the number of threads to launch')
+}
+if(length(threads) > 1){
+    stop('Too many arguments have been provided')
+}
+if(is.numeric(threads) == F){
+    stop('Only numeric arguments are accepted')
+}
+if(threads < 1){
+    stop('At least one thread is needed')
+} else {
+    cat(threads, 'threads requested', '\n')
+}
+
 # Load packages ####
 library(Biostrings)
 library(tidyr)
@@ -13,6 +34,7 @@ out <- '02-rename'
 logs <- file.path(out,  'logs')
 unlink(out, recursive = T)
 dir.create(logs, recursive = T)
+dir.create('scratch', recursive = T)
 
 # Identify ranks of interest ####
 ranks <- c('kingdom', 'phylum', 'class', 'order', 'family', 'genus', 'species')
@@ -29,8 +51,9 @@ fun$taxon <- fun$species |>
     str_replace_all('_', ' ')
 
 # Read in and process the Index Fungorum reference ####
-fg <- read_csv(file.path('data', 'IFexportGN-2023-03-07.csv'), skip = 1,
-               col_names = c('record', 'taxon', 'author', 'year', 'current', ranks[1:5])) |>
+fg <- read_csv(list.files('data', 'IFexportGN-*', full.names = T), skip = 1,
+               col_names = c('record', 'taxon', 'author', 'year', 'current', ranks[1:5]),
+               num_threads = threads) |>
     filter(is.na(current) == F,
            is.na(kingdom) == F) |> 
     mutate(parts = str_count(taxon, "[[:graph:]]+"),
@@ -89,12 +112,29 @@ full <- full[replicas$header.in]
 
 # Update the names ####
 names(full) <- replicas$header.out
-full |> writeXStringSet(file.path(out, 'if-unite-insdc.fa'), width = 11000)
+full |> writeXStringSet(file.path('scratch', 'full.fa.gz'),
+                        width = 20001,
+                        compress = T)
 
 # Dereplicate the sequences ####
-system(paste('vsearch --fasta_width 0 --derep_id', file.path(out, 'if-unite-insdc.fa'),
+system(paste('vsearch --fasta_width 0 --derep_id', file.path('scratch', 'full.fa.gz'),
              '--log', file.path(logs, 'derep.txt'),
-             '--output - | gzip -5 >', file.path(out, 'if-unite-insdc.fa.gz')))
+             '--output - | pigz -p', threads, '>', file.path('scratch', 'derep.fa.gz')))
 
-# Remove the uncompressed file ####
-unlink(file.path(out, 'if-unite-insdc.fa'))
+# Reload the dereplicated output ####
+uni <- readDNAStringSet(file.path('scratch', 'derep.fa.gz'))
+
+# Make each header unique. Ideally, each sequence entry would be reunited with its original accession ####
+new.names <- paste0(names(uni), ' ', formatC(1:length(names(uni)),
+                                             width = 8,
+                                             format = 'd',
+                                             flag = '0'))
+names(uni) <- new.names
+
+# Write out the updated FASTA file ####
+writeXStringSet(uni, file.path(out, 'if-unite-insdc.fa.gz'),
+                width = 20001,
+                compress = T)
+
+# Remove the scratch directory ####
+unlink('scratch', recursive = T)
