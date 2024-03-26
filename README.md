@@ -78,7 +78,7 @@ sequences in `if-unite-insdc.fa.gz` also exists in a separate file. This
 functionality was added to help remove taxonomy assignment noise
 associated with the `assignTaxonomy()` function in DADA2, which
 implements the RDP Naive Bayesian Classifier algorithm described in
-[Wang *et al*. 2007.](https://doi.org/10.1128/aem.00062-07) Essentially,
+[Wang et al., 2007.](https://doi.org/10.1128/aem.00062-07) Essentially,
 if separate databases are used (ITS1 for ITS1, ITS2 for ITS2, etc.),
 this removes the chances for non-target *k*mer matches to occur (e.g.,
 where an 8mer in an ITS1 ASV/OTU sequence just happens to match
@@ -98,11 +98,18 @@ ITS2 references (which originate from a processed UNITE+INSD fungal
 release).
 
 This separation also facilitates the use of both 5.8S and ITS2 for
-taxonomic assignment, as demonstrated in [Heeger *et al*.
+taxonomic assignment, as demonstrated in [Heeger et al.,
 2019](https://doi.org/10.1111/2041-210X.13266). They found that ITS1 and
-ITS2 sequences alone can fail to obtain taxonomic assignments at even
-high ranks (e.g., kingdom, phylum, and class) when assignment reference
-files are incomplete (as they always are).
+ITS2 sequences alone can fail to obtain taxonomic assignments at high
+ranks (e.g., kingdom, phylum, and class) when assignment references are
+incomplete (as they always are), which lines up with my experience and
+those of my peers. After extracting the 5.8S and ITS2 sequences from an
+ASV/OTU sequence, each subregion can be used to separately assign
+taxonomy to that sequence, allowing the 5.8S subregion to provide
+high-rank assignments when ITS2 fails to provide any assignment. This
+separation seems necessary, as Heeger et al. report that classification
+with combined fragments did not perform as well as independent
+classification.
 
 ## Planned improvements include:
 
