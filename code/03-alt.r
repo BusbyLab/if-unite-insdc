@@ -40,8 +40,9 @@ fun.extract <- lsux(file.path(in.path, 'if-unite-insdc.fa.gz'),
 fun.extract |> saveRDS(file.path(out, 'fun_extract.rds'))
 
 # Extract the eukaryotic 5.8S and ITS2 subregions, specifying a eukaryotic 32S covariance model ####
-euk.extract <- lsux(list.files('data', 'sh_general_release_dynamic_all_*', full.names = T),
-                    cm_32S = file.path('data', 'RF02543.cm'),
-                    ITS1 = F,
-                    cpu = threads)
-euk.extract |> saveRDS(file.path(out, 'euk_extract.rds'))
+# euk.extract <- lsux(list.files('data', 'sh_general_release_dynamic_all_*', full.names = T),
+#                     cm_32S = file.path('data', 'RF02543.cm'),
+#                     ITS1 = F,
+#                     cpu = threads,
+#                     mxsize = 16384)
+# euk.extract |> saveRDS(file.path(out, 'euk_extract.rds'))
