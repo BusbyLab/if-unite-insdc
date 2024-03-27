@@ -1,7 +1,7 @@
 IF + UNITE + INSDC: improved fungal taxonomy for ITS reference sequences
 ================
 Kyle A. Gervers
-2024-03-26
+2024-03-27
 
 ## Overview
 
@@ -14,7 +14,7 @@ compared with what [Index Fungorum](http://www.indexfungorum.org/)
 reports, and many of the included sequences lack detailed taxonomic
 resolution.
 
-Starting from the most recent (as of 2024-03-26) fungal UNITE+INSD
+Starting from the most recent (as of 2024-03-27) fungal UNITE+INSD
 release, this repo does the following:
 
 - Removes sequences not identified to genus
@@ -111,6 +111,30 @@ separation seems necessary, as Heeger et al. report that classification
 with combined fragments did not perform as well as independent
 classification.
 
+## Subregion extraction using `LSUx` ( + `inferrnal` + `tzara`)
+
+[`LSUx`](https://github.com/brendanf/LSUx) is an R package developed by
+[Brendan Furneaux](https://github.com/brendanf) that uses ribosomal
+large subunit covariance models (such as those available on
+[Rfam](https://rfam.org/)) to estimate the start and stop positions of
+the 5.8S, ITS2, and 28S/32S subregions. Variable regions (e.g., D1/V2,
+D2/V3, etc.) within the 28S/32S region are also demarcated, which
+`ITSx`/`itsxpress` cannot do. ITS1 positions are also inferred with
+regard to 5.8S starting positions, so all three subregions can
+ultimately be extracted. I thought it would be interesting to see how
+the output of this user-friendly R package compares to `ITSx` output, so
+the `03-alt.r` and its associated output directory `03-alt.r` have been
+added here.
+
+`LSUx` calls [`inferrnal`](https://github.com/brendanf/inferrnal), which
+wraps [Infernal](http://eddylab.org/infernal/). Unlike `ITSx` profile
+hidden Markov models, Infernal covariance models allow for potentially
+base-pairing nucleotides in different positions of a primary nucleic
+acid sequence to *covary*, thereby accounting for the conservation of
+secondary structures known to exist for rRNA sequences. The R package
+[`tzara`](https://github.com/brendanf/tzara) is used here to extract
+subregions identified by `LSUx` (although it can do much more).
+
 ## Planned improvements include:
 
 - retention of the original accession number associated with each
@@ -131,13 +155,17 @@ All packages were installed and managed with `conda`.
       - nodefaults
     dependencies:
       - bioconductor-biostrings=2.66.0
+      - bioconductor-shortread=1.56.0
       - r-base=4.2.2
       - r-dplyr=1.1.2
+      - r-futile.logger=1.4.3
       - r-markdown=1.6
       - r-readr=2.1.4
+      - r-remotes=2.5.0
       - r-rmarkdown=2.21
       - r-stringr=1.5.0
       - r-tidyr=1.3.0
+      - infernal=1.1.5
       - itsx=1.1.3
       - vsearch=2.22.1
       - pigz=2.8
