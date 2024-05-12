@@ -1,7 +1,7 @@
 IF + UNITE + INSDC: improved fungal taxonomy for ITS reference sequences
 ================
 Kyle A. Gervers
-2024-03-27
+2024-05-12
 
 ## Overview
 
@@ -14,7 +14,7 @@ compared with what [Index Fungorum](http://www.indexfungorum.org/)
 reports, and many of the included sequences lack detailed taxonomic
 resolution.
 
-Starting from the most recent (as of 2024-03-27) fungal UNITE+INSD
+Starting from the most recent (as of 2024-05-12) fungal UNITE+INSD
 release, this repo does the following:
 
 - Removes sequences not identified to genus
@@ -85,11 +85,11 @@ where an 8mer in an ITS1 ASV/OTU sequence just happens to match
 somewhere other than the ITS1 subregion full ITS reference).
 
 **These split references are found in the `its1`, `5.8s`, and `its2`
-subdirectories within the `03-extract` directory. Use files following
-the `fun.[ITS1/5.8S/ITS2].fasta.gz` or `euk.5.8S.fasta.gz` pattern as
-taxonomic references; the other files in each subdirectory are outputs
-of [`ITSx`](https://microbiology.se/software/itsx/), available for
-inspection.**
+subdirectories within the `04-trim` directory. Use files following the
+`fun.[ITS1/5_8S/ITS2].fasta.gz` or `euk.5_8S.fasta.gz` pattern as
+taxonomic references. The files in the `03-extract` subdirectory are
+outputs of [`ITSx`](https://microbiology.se/software/itsx/) and
+available for inspection.**
 
 5.8S sequences prefixed with `euk` originate from the most current,
 non-singleton eukaryote general UNITE release, facilitating non-fungal
