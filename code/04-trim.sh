@@ -34,17 +34,17 @@ touch $out/README.md
 
 # Remove unique numbers from the header of each entry ####
 pigz -p 4 -cd $in/$its1 | \
-sed 's/ [0-9]+$//' | \
+sed 's/ [0-9]\+$//' | \
 pigz -p $1 > $out/$its1
 
 pigz -p 4 -cd $in/$euk | \
-sed 's/ [0-9]+$//' | \
+sed 's/ [0-9]\+$//' | \
 pigz -p $1 > $out/$euk
 
 pigz -p 4 -cd $in/$fun | \
-sed 's/ [0-9]+$//' | \
+sed 's/ [0-9]\+$//' | \
 pigz -p $1 > $out/$fun
 
 pigz -p 4 -cd $in/$its2 | \
-sed 's/ [0-9]+$//' | \
+sed 's/ [0-9]\+$//' | \
 pigz -p $1 > $out/$its2
